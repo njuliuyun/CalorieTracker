@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en" data-framework="backbonejs">
+    <head>
+        <meta charset="utf-8">
+        <title>Calorie Tracker</title>
+        <link rel="stylesheet" href="assets/style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Calorie Tracker</h1>
+        </header>
+        <section id="main" class="clearfix">            
+            <section id="search-section" class="column">
+                <input id="search-input" placeholder="what did you eat?" autofocus>
+                <button id="search-btn">Search</button>
+                <ul id="result-list"></ul>
+            </section>
+            <section id="display-section" class="column">
+                <p id="total">Total Calorie: <span>0</span></p>
+                <ul id="food-list"></ul>
+            </section>
+        </section>
+        <footer id="info">footer</footer>
+        <!--result template-->
+        <script type="text/template" id="result-template">
+            <div> 
+                <%= result %> <span>serving<span>
+                <input type="text" class="serving" value="1">
+                <button class="add">add</button>
+            </div>
+        </script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.2.3/backbone-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone-localstorage.js/1.1.16/backbone.localStorage-min.js"></script>
+        <!-- Firebase -->
+        <script src="https://cdn.firebase.com/js/client/2.3.1/firebase.js"></script>
+        <!-- BackboneFire -->
+        <script src="https://cdn.firebase.com/libs/backbonefire/0.5.1/backbonefire.min.js"></script>
+        
+        <script src="js/models/food.js"></script>
+        <script src="js/collections/foodcollection.js"></script>
+        <script src="js/views/foodview.js"></script>
+        <script src="js/views/foodlistview.js"></script>
+        <script src="js/views/resultview.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
