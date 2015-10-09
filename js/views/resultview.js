@@ -7,7 +7,7 @@ var app = app || {};
         tagName: 'li',
         template: _.template($('#result-template').html()),
         events: {
-          'click .add': 'addFood'  
+          'click .add': 'addFood'          
         },
         initialize: function() {
             this.title = this.model.get('title');
@@ -21,7 +21,9 @@ var app = app || {};
         },
         addFood: function() {
             var foodExist = app.foodList.findWhere({title: this.title});
-            var amount = parseInt(this.$servingInput.val());
+            var amount = this.$servingInput.val();
+            if (isNaN(amount)) amount = 1;
+            else amount = parseInt(amount);
             if (foodExist) {                
                 foodExist.save({amount: foodExist.get('amount') + amount});
             }
@@ -38,7 +40,8 @@ var app = app || {};
     app.ResultsView = Backbone.View.extend({
         el: $('#search-section'),
         events: {
-            'click #search-btn': 'getResult'
+            'click #search-btn': 'getResult',
+            'keypress #search-input': 'getOnEnter'
         },
         initialize: function() {
             this.$input = $('#search-input');
@@ -49,6 +52,7 @@ var app = app || {};
             var url = 'https://api.nutritionix.com/v1_1/search/'+searchInput+'?results=0:20&fields=item_name,brand_name,nf_calories&appId=b778c2c4&appKey=d801ad2646a7d6c0f113f03957875f5a';
             this.$input.val('');
             
+            this.$results.html('');
             var self = this;
             var nutriRequestTimeout = setTimeout(function() {
                 self.$results.text("failed to get calorie data");
@@ -73,8 +77,11 @@ var app = app || {};
                     }
                     clearTimeout(nutriRequestTimeout);
                 }
-            }) 
-            
+            });
+        },
+        getOnEnter: function() {
+            if (event.which !== ENTER_KEY || !this.$input.val().trim()) return;
+            this.getResult();
         }
     });
     
